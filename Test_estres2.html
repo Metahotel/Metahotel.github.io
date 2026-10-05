@@ -99,6 +99,23 @@ footer{font-size:.78rem;color:var(--muted);text-align:center;margin-top:24px;pad
  .coach .lines{display:block}
  .pitem{break-inside:avoid}
 }
+
+.ev{display:grid;grid-template-columns:1fr;gap:8px}
+.ev label{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px 14px;cursor:pointer;background:#fff}
+.ev label:has(input:checked){background:#eaf4fb;border-color:var(--blue)}
+.ev input{width:18px;height:18px;accent-color:var(--blue);flex:none}
+.ev .t{flex:1}
+.ev .pts{font-weight:800;color:var(--blue);white-space:nowrap}
+.opts.yn{grid-template-columns:repeat(2,1fr);max-width:320px}
+.part{display:inline-block;background:var(--soft);color:var(--blue);font-weight:800;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;border-radius:20px;padding:4px 12px;margin-bottom:8px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.duo .card{margin-bottom:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:var(--soft);border:1px solid var(--line);border-radius:20px;padding:6px 12px;font-size:.86rem}
+.running{font-size:.9rem;color:var(--muted);margin:0 0 12px}
+.running b{color:var(--blue)}
+@media (max-width:640px){.duo{grid-template-columns:1fr}.opts.yn{grid-template-columns:1fr 1fr;max-width:none}.opts.yn label{justify-content:center}}
+@media print{.chip{break-inside:avoid}}
 </style>
 </head>
 <body>
@@ -107,16 +124,14 @@ footer{font-size:.78rem;color:var(--muted);text-align:center;margin-top:24px;pad
  <div class="hero">
   <div class="eyebrow">Módulo 3 · Herramienta de reflexión</div>
   <h1>Test de estrés</h1>
-  <p>Identifica cómo se manifiesta el estrés en tu cuerpo, tus emociones, tus pensamientos y tu conducta, y lleva los resultados a la sesión con tu coach.</p>
+  <p>Dos cuestionarios para conocer tu nivel de estrés: los acontecimientos vitales que has vivido en el último año y cómo percibes tu día a día.</p>
  </div>
 
  <section id="intro" class="card">
   <h2>Antes de empezar</h2>
-  <p>Piensa en <b>las últimas cuatro semanas</b> y responde a cada afirmación con la frecuencia con la que te ocurre. No hay respuestas buenas ni malas: cuanto más sincera sea la respuesta, más útil será la conversación posterior.</p>
-  <div class="scale-legend">
-   <div><b>0</b>No o nunca</div><div><b>1</b>Algo o algunas veces</div><div><b>2</b>Promedio</div><div><b>3</b>Normalmente o una buena cantidad</div><div><b>4</b>Prácticamente siempre o siempre</div>
-  </div>
-  <p class="muted" style="font-size:.85rem;margin-bottom:0">Son 24 afirmaciones en 4 bloques (unos 5 minutos). Las respuestas permanecen en esta pestaña: no se guardan ni se envían a ningún sitio.</p>
+  <p><b>Parte 1 · Escala de acontecimientos vitales estresantes (Holmes y Rahe).</b> En 1967, los psiquiatras Thomas Holmes y Richard Rahe recogieron los 43 acontecimientos vitales más estresantes y les dieron una puntuación de 0 a 100. Para ellos, el estrés es una adaptación al cambio, tanto si el cambio es positivo como si es negativo. Marca las situaciones que hayas vivido <b>durante el último año</b>.</p>
+  <p><b>Parte 2 · Cuestionario de estrés percibido.</b> Responde <b>Sí</b> o <b>No</b> a 28 preguntas sobre tu situación actual.</p>
+  <p class="muted" style="font-size:.85rem;margin-bottom:0">La valoración del estrés puede variar según la persona y la cultura: tómalo como punto de partida para la reflexión. Las respuestas permanecen en esta pestaña: no se guardan ni se envían a ningún sitio.</p>
  </section>
 
  <section id="quiz" class="card">
@@ -127,39 +142,41 @@ footer{font-size:.78rem;color:var(--muted);text-align:center;margin-top:24px;pad
  </section>
 
  <section id="results">
-  <div class="card">
-   <h2>Tu resultado</h2>
-   <div class="summary">
-    <div class="ring" id="ring"><div class="in"><b id="score">0</b><small>de 96 puntos</small></div></div>
-    <div>
-     <p class="bandname" id="bandname"></p>
-     <p id="banddesc" style="margin:0"></p>
-     <div class="bands" id="bands"></div>
-    </div>
+  <div class="duo" style="margin-bottom:18px">
+   <div class="card">
+    <span class="part">Parte 1 · Acontecimientos vitales</span>
+    <div class="ring" id="ring1"><div class="in"><b id="score1">0</b><small>puntos</small></div></div>
+    <p class="bandname" id="band1" style="text-align:center;margin-top:12px"></p>
+    <p id="desc1" style="margin:0;font-size:.92rem"></p>
+    <div class="bands" id="bands1" style="grid-template-columns:repeat(3,1fr)"></div>
+   </div>
+   <div class="card">
+    <span class="part">Parte 2 · Estrés percibido</span>
+    <div class="ring" id="ring2"><div class="in"><b id="score2">0</b><small>de 56 puntos</small></div></div>
+    <p class="bandname" id="band2" style="text-align:center;margin-top:12px"></p>
+    <p id="desc2" style="margin:0;font-size:.92rem"></p>
+    <div class="bands" id="bands2" style="grid-template-columns:repeat(3,1fr)"></div>
    </div>
   </div>
 
   <div class="card">
-   <h2>Cómo se manifiesta tu estrés</h2>
-   <p class="muted" style="margin-top:0">Puntuación por área (0–24). El área más alta suele ser la primera señal de alarma y el mejor punto de entrada para trabajar.</p>
-   <div class="areas" id="areas"></div>
-  </div>
-
-  <div class="card">
    <h2>Áreas prioritarias para comentar</h2>
-   <p class="muted" style="margin-top:0">Las tres afirmaciones con mayor frecuencia. Son un buen punto de partida para la conversación con tu coach.</p>
+   <p class="muted" style="margin-top:0">Los acontecimientos que más puntúan y las situaciones a las que has respondido «Sí». Son un buen punto de partida para la conversación con tu coach.</p>
+   <h3 style="font-size:1rem;margin:0 0 10px">Acontecimientos de mayor impacto</h3>
    <div class="prio" id="prio"></div>
+   <h3 style="font-size:1rem;margin:20px 0 10px">Situaciones que identificas en tu día a día <span class="muted" id="sicount" style="font-weight:400"></span></h3>
+   <div class="chips" id="chips"></div>
    <button class="ghost toggle" id="toggle">Ver análisis completo</button>
    <div id="full"></div>
   </div>
 
   <div class="card coach">
    <h2>Guion para la conversación</h2>
-   <p class="muted" style="margin-top:0">Elige una de las áreas prioritarias y prepárala con estas cuatro preguntas.</p>
+   <p class="muted" style="margin-top:0">Elige un acontecimiento o una situación y prepárala con estas cuatro preguntas.</p>
    <ol>
-    <li><b>1. Situación</b>¿En qué momento concreto aparece? ¿Con quién, dónde, con qué frecuencia?<div class="lines"></div></li>
-    <li><b>2. Señales</b>¿Qué notas primero: en el cuerpo, en lo que sientes, en lo que piensas o en lo que haces?<div class="lines"></div></li>
-    <li><b>3. Necesidad</b>¿Qué te falta en esa situación: tiempo, apoyo, claridad, un límite, descanso?<div class="lines"></div></li>
+    <li><b>1. Situación</b>¿Qué ha cambiado o qué está pasando exactamente? ¿Desde cuándo?<div class="lines"></div></li>
+    <li><b>2. Señales</b>¿Cómo lo notas: en el cuerpo, en lo que sientes, en lo que piensas o en lo que haces?<div class="lines"></div></li>
+    <li><b>3. Necesidad</b>¿Qué te falta para adaptarte mejor: tiempo, apoyo, claridad, un límite, descanso?<div class="lines"></div></li>
     <li><b>4. Nueva respuesta</b>¿Qué pequeño cambio podrías probar esta semana? ¿Cómo sabrás que ha funcionado?<div class="lines"></div></li>
    </ol>
   </div>
@@ -174,100 +191,103 @@ footer{font-size:.78rem;color:var(--muted);text-align:center;margin-top:24px;pad
 </div>
 
 <script>
-const areas = {
- fis:{name:"Físicas",color:"#12a9cf"},
- emo:{name:"Emocionales",color:"#2479bd"},
- cog:{name:"Cognitivas",color:"#5b6fb8"},
- con:{name:"Conductuales",color:"#26323a"}
-};
+const events = [
+ ["Muerte del cónyuge",100],["Divorcio",73],["Separación",65],["Privación de la libertad",63],["Muerte de un familiar próximo",63],
+ ["Enfermedad o incapacidad graves",53],["Matrimonio",50],["Perder el empleo",47],["Reconciliación de la pareja",45],["Jubilación",45],
+ ["Enfermedad de un pariente cercano",44],["Embarazo",40],["Problemas sexuales",39],["Llegada de un nuevo miembro a la familia",39],["Cambios importantes en el trabajo",39],
+ ["Cambios importantes a nivel económico",38],["Muerte de un amigo íntimo",37],["Cambiar de empleo",36],["Discusiones con la pareja (cambio significativo)",35],["Pedir una hipoteca de alto valor",31],
+ ["Hacer efectivo un préstamo",30],["Cambio de responsabilidades en el trabajo",29],["Un hijo/a abandona el hogar (matrimonio, universidad)",29],["Problemas con la ley",29],["Logros personales excepcionales",28],
+ ["La pareja comienza o deja de trabajar",26],["Se inicia o se termina el ciclo de escolarización",26],["Cambios importantes en las condiciones de vida",25],["Cambio en los hábitos personales",24],["Problemas con el jefe",23],
+ ["Cambio en el horario o condiciones de trabajo",20],["Cambio de residencia",20],["Cambio a una escuela nueva",20],["Cambio en la forma o frecuencia de las diversiones",19],["Cambio en la frecuencia de las actividades religiosas",19],
+ ["Cambio en las actividades sociales",18],["Pedir una hipoteca o préstamo menor",17],["Cambios en los hábitos del sueño",16],["Cambios en el número de reuniones familiares",15],["Cambio en los hábitos alimentarios",15],
+ ["Vacaciones",15],["Navidades",12],["Infracciones menores de la ley",11]
+].map(([text,pts],i)=>({id:i+1,text,pts}));
 const questions = [
- {id:1, area:"fis", text:"Me cuesta dormir o me despierto cansado/a aunque haya descansado las horas suficientes."},
- {id:2, area:"emo", text:"Me irrito con facilidad con compañeros, clientes o personas cercanas."},
- {id:3, area:"cog", text:"Me cuesta concentrarme y cometo más despistes de lo habitual."},
- {id:4, area:"con", text:"Respondo de forma brusca o cortante cuando me interrumpen o me piden algo con prisa."},
- {id:5, area:"fis", text:"Noto tensión en el cuello, la espalda o la mandíbula al final del turno."},
- {id:6, area:"emo", text:"Me siento desbordado/a por la cantidad de tareas pendientes."},
- {id:7, area:"cog", text:"Sigo pensando en problemas del trabajo cuando ya he salido del hotel."},
- {id:8, area:"con", text:"Dejo para más tarde tareas importantes porque me siento bloqueado/a."},
- {id:9, area:"fis", text:"Tengo dolores de cabeza o molestias digestivas en las épocas de más trabajo."},
- {id:10,area:"emo", text:"Siento inquietud o nervios antes de empezar el turno."},
- {id:11,area:"cog", text:"Me cuesta tomar decisiones, incluso sencillas."},
- {id:12,area:"con", text:"He reducido el tiempo que dedico a descansar, moverme o estar con personas que me importan."},
- {id:13,area:"fis", text:"Me siento agotado/a físicamente incluso en mis días libres."},
- {id:14,area:"emo", text:"Me cuesta disfrutar de cosas que antes me gustaban."},
- {id:15,area:"cog", text:"Anticipo que las cosas van a salir mal."},
- {id:16,area:"con", text:"Recurro al café, el azúcar, el tabaco u otras sustancias para aguantar el ritmo."},
- {id:17,area:"fis", text:"Noto el corazón acelerado o la respiración entrecortada en momentos de presión (llegadas masivas, quejas, auditorías…)."},
- {id:18,area:"emo", text:"Me siento poco valorado/a o frustrado/a con mi trabajo."},
- {id:19,area:"cog", text:"Tengo la sensación de que no llego a todo, por mucho que me esfuerce."},
- {id:20,area:"con", text:"Me cuesta decir que no y acabo asumiendo más de lo que puedo."},
- {id:21,area:"fis", text:"Mis hábitos de comida cambian (como de más, de menos o a deshoras) cuando hay presión."},
- {id:22,area:"emo", text:"Tengo cambios de humor que me cuesta gestionar."},
- {id:23,area:"cog", text:"Se me olvidan cosas importantes: encargos, peticiones de clientes, citas."},
- {id:24,area:"con", text:"Evito situaciones o personas del trabajo que me generan tensión."}
-];
-const labels = ["No o nunca","Algo o algunas veces","Promedio","Normalmente o una buena cantidad","Prácticamente siempre o siempre"];
-const bandsDef = [
- {min:0, max:24, name:"Estrés bajo", color:"#2f8a5c", desc:"Gestionas bien la presión en este momento. Identifica qué te está ayudando para poder recurrir a ello cuando lleguen periodos más exigentes."},
- {min:25,max:48, name:"Estrés moderado", color:"#12a9cf", desc:"Hay señales de tensión en algunas áreas. Es buen momento para detectar qué situaciones las disparan y ajustar hábitos antes de que se acumulen."},
- {min:49,max:72, name:"Estrés alto", color:"#d99a1e", desc:"El estrés está afectando a varias áreas de tu día a día. Conviene priorizar el descanso, revisar la carga y trabajar con tu coach estrategias concretas."},
- {min:73,max:96, name:"Estrés muy alto", color:"#c0503f", desc:"El nivel de estrés es elevado y sostenido. Coméntalo con tu coach y considera pedir apoyo a un profesional de la salud si el malestar persiste."}
-];
-const state = {page:0, perPage:6, answers:{}};
-const pages = Math.ceil(questions.length/state.perPage);
-const $ = id => document.getElementById(id);
+ "¿Te enfadas con mucha facilidad?","¿Sueles tener problemas de salud?","¿Prefieres quedarte en casa a competir en el exigente mundo moderno?","¿Te resulta difícil mantener el equilibrio en situaciones de agresión externa?",
+ "¿A menudo te sientes poco amado?","¿Se te hacen insoportables las críticas?","¿Sientes que en tu vida hay más sacrificios que compensaciones?","¿Te sientes solo y vacío?",
+ "¿Sientes que tienes mucha responsabilidad en tu trabajo?","¿Te cuesta separar los problemas externos (laborales, económicos) de tu vida interior?","¿Sientes que en tu trabajo no te valoran como te mereces?","¿Tienes conflictos en tu vida de pareja?",
+ "¿Sientes que tu vida es muy rutinaria?","¿Tienes la sensación de que te están evaluando continuamente?","¿Te cuesta imponer tu autoridad?","¿Te sientes mal contigo mismo?",
+ "¿Tu trabajo te resulta rutinario y poco apasionante?","¿Has perdido tu trabajo o estás a punto de perderlo?","¿Tiendes a ser introvertido?","¿Te resulta difícil distribuir bien tu tiempo?",
+ "¿Tu trabajo te provoca frecuentes disgustos?","¿Haces más cosas de las que puedes?","¿Te cuesta perdonar?","¿Te disgustas mucho cuando las cosas no salen como habías planeado?",
+ "¿Te cuesta encarar de frente las dificultades?","¿Sueles dejar tareas a medio hacer o aplazarlas habitualmente?","¿Te agobia la dificultad de que el dinero te llegue a fin de mes?","¿Tu vida ha experimentado muchos cambios en el último año?"
+].map((text,i)=>({id:i+1,text}));
 
+const bands1 = [
+ {min:0,max:149,name:"Riesgo bajo",color:"#2f8a5c",desc:"Por debajo de 150 puntos: solo tienes un pequeño riesgo de experimentar trastornos psicosomáticos por estrés."},
+ {min:150,max:299,name:"Riesgo moderado",color:"#d99a1e",desc:"Entre 150 y 299 puntos: tienes un riesgo moderado de experimentar trastornos psicosomáticos por estrés."},
+ {min:300,max:Infinity,name:"Riesgo alto",color:"#c0503f",desc:"300 puntos o más: estás en grave riesgo de experimentar trastornos psicosomáticos por estrés."}
+];
+const bands2 = [
+ {min:28,max:34,name:"Estrés bajo",color:"#2f8a5c",desc:"Menos de 35 puntos: bajo nivel de estrés."},
+ {min:35,max:48,name:"Estrés moderado",color:"#d99a1e",desc:"De 35 a 48 puntos: nivel moderado de estrés."},
+ {min:49,max:56,name:"Estrés alto",color:"#c0503f",desc:"Más de 48 puntos: alto nivel de estrés."}
+];
+
+// Pasos: 3 páginas de acontecimientos + 4 páginas de preguntas (7 por página)
+const steps = [];
+for(let i=0;i<events.length;i+=15) steps.push({part:1, items:events.slice(i,i+15)});
+for(let i=0;i<questions.length;i+=7) steps.push({part:2, items:questions.slice(i,i+7)});
+const state = {page:0, events:{}, answers:{}};
+const $ = id => document.getElementById(id);
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+const sum1 = () => events.filter(e=>state.events[e.id]).reduce((s,e)=>s+e.pts,0);
 
 function renderPage(){
- const start = state.page*state.perPage;
- const qs = questions.slice(start,start+state.perPage);
- $("qs").innerHTML = qs.map(q=>`<div class="q" data-id="${q.id}"><p><span class="n">${q.id}.</span>${escapeHtml(q.text)}</p><div class="opts">${
-   labels.map((l,v)=>`<label><input type="radio" name="q${q.id}" value="${v}" ${state.answers[q.id]===v?"checked":""}><b>${v}</b>${l}</label>`).join("")
- }</div></div>`).join("");
- $("qs").querySelectorAll("input").forEach(i=>i.addEventListener("change",()=>{capture();i.closest(".q").classList.remove("missing");updateProgress()}));
+ const st = steps[state.page];
+ if(st.part===1){
+  $("qs").innerHTML = `<span class="part">Parte 1 · Acontecimientos vitales</span><p class="running">Marca las situaciones que has vivido en el último año. Llevas <b id="run">${sum1()}</b> puntos.</p><div class="ev">${
+   st.items.map(e=>`<label><input type="checkbox" data-ev="${e.id}" ${state.events[e.id]?"checked":""}><span class="t">${e.id}. ${escapeHtml(e.text)}</span><span class="pts">${e.pts}</span></label>`).join("")}</div>`;
+  $("qs").querySelectorAll("input").forEach(i=>i.addEventListener("change",()=>{state.events[+i.dataset.ev]=i.checked;$("run").textContent=sum1();updateProgress()}));
+ } else {
+  $("qs").innerHTML = `<span class="part">Parte 2 · Estrés percibido</span>` + st.items.map(q=>`<div class="q" data-id="${q.id}"><p><span class="n">${q.id}.</span>${escapeHtml(q.text)}</p><div class="opts yn">${
+   [["si","Sí"],["no","No"]].map(([v,l])=>`<label><input type="radio" name="q${q.id}" value="${v}" ${state.answers[q.id]===v?"checked":""}><b>${l}</b></label>`).join("")}</div></div>`).join("");
+  $("qs").querySelectorAll("input").forEach(i=>i.addEventListener("change",()=>{state.answers[+i.name.slice(1)]=i.value;i.closest(".q").classList.remove("missing");updateProgress()}));
+ }
  $("prev").style.visibility = state.page===0?"hidden":"visible";
- $("next").textContent = state.page===pages-1?"Ver resultados →":"Siguiente →";
+ $("next").textContent = state.page===steps.length-1?"Ver resultados →":"Siguiente →";
  $("warn").style.display="none";
  updateProgress();
 }
 function updateProgress(){
+ $("pbar").style.width = ((state.page+1)/steps.length*100)+"%";
  const n = Object.keys(state.answers).length;
- $("pbar").style.width = (n/questions.length*100)+"%";
- $("ptext").textContent = `Página ${state.page+1} de ${pages} · ${n}/${questions.length} respondidas`;
-}
-function capture(){
- $("qs").querySelectorAll("input:checked").forEach(i=>{state.answers[+i.name.slice(1)] = +i.value});
+ $("ptext").textContent = `Página ${state.page+1} de ${steps.length}` + (steps[state.page].part===2?` · ${n}/28 respondidas`:"");
 }
 function pageComplete(){
- capture();
+ const st = steps[state.page];
+ if(st.part===1) return true;
  let ok = true;
- $("qs").querySelectorAll(".q").forEach(d=>{ if(state.answers[+d.dataset.id]===undefined){d.classList.add("missing");ok=false} });
+ $("qs").querySelectorAll(".q").forEach(d=>{ if(!state.answers[+d.dataset.id]){d.classList.add("missing");ok=false} });
  return ok;
 }
-function band(score){return bandsDef.find(b=>score>=b.min && score<=b.max)}
+const band = (list,score)=>list.find(b=>score>=b.min && score<=b.max);
 function resultsData(){
- const score = questions.reduce((s,q)=>s+state.answers[q.id],0);
- const byArea = {};
- Object.keys(areas).forEach(k=>byArea[k]=0);
- questions.forEach(q=>byArea[q.area]+=state.answers[q.id]);
- const items = questions.map(q=>({...q, answer:state.answers[q.id], gap:state.answers[q.id]}));
- const prio = [...items].filter(i=>i.gap>0).sort((a,b)=>b.gap-a.gap || byArea[b.area]-byArea[a.area] || a.id-b.id).slice(0,3);
- return {score, b:band(score), byArea, items, prio};
+ const chosen = events.filter(e=>state.events[e.id]);
+ const s1 = chosen.reduce((s,e)=>s+e.pts,0);
+ const yes = questions.filter(q=>state.answers[q.id]==="si");
+ const s2 = yes.length*2 + (questions.length-yes.length);
+ return {chosen, s1, b1:band(bands1,s1), yes, s2, b2:band(bands2,s2)};
+}
+function paintBands(el,list,cur){
+ el.innerHTML = list.map(b=>`<div class="${b===cur?"on":""}" style="${b===cur?"background:"+b.color:""}">${b.name}<br>${b.max===Infinity?b.min+"+":b.min+"–"+b.max}</div>`).join("");
 }
 function showResults(){
  const r = resultsData();
- $("score").textContent = r.score;
- const pct = r.score/96*100;
- $("ring").style.background = `conic-gradient(${r.b.color} ${pct}%, var(--line) 0)`;
- $("bandname").textContent = r.b.name;
- $("bandname").style.color = r.b.color;
- $("banddesc").textContent = r.b.desc;
- $("bands").innerHTML = bandsDef.map(b=>`<div class="${b===r.b?"on":""}" style="${b===r.b?"background:"+b.color:""}">${b.name}<br>${b.min}–${b.max}</div>`).join("");
- const maxA = Math.max(...Object.values(r.byArea));
- $("areas").innerHTML = Object.entries(areas).map(([k,a])=>`<div class="area-row"><span>${a.name}${r.byArea[k]===maxA&&maxA>0?" <small style='color:var(--red);font-weight:700'>· principal</small>":""}</span><div class="track"><span style="width:${r.byArea[k]/24*100}%;background:${a.color}"></span></div><b>${r.byArea[k]}/24</b></div>`).join("");
- $("prio").innerHTML = r.prio.length ? r.prio.map(i=>`<div class="pitem" style="border-left-color:${areas[i.area].color}"><div class="top"><span>Pregunta ${i.id}</span><span>Área ${areas[i.area].name.toLowerCase()}</span></div><p>${escapeHtml(i.text)}</p><div class="ans">Tu respuesta: <b>${i.answer} · ${labels[i.answer]}</b></div></div>`).join("")
-   : `<p class="muted">No has marcado ninguna afirmación por encima de 0. Comenta con tu coach qué recursos te están ayudando a mantener el equilibrio.</p>`;
+ $("score1").textContent = r.s1;
+ $("ring1").style.background = `conic-gradient(${r.b1.color} ${Math.min(r.s1/400,1)*100}%, var(--line) 0)`;
+ $("band1").textContent = r.b1.name; $("band1").style.color = r.b1.color; $("desc1").textContent = r.b1.desc;
+ paintBands($("bands1"),bands1,r.b1);
+ $("score2").textContent = r.s2;
+ $("ring2").style.background = `conic-gradient(${r.b2.color} ${(r.s2-28)/28*100}%, var(--line) 0)`;
+ $("band2").textContent = r.b2.name; $("band2").style.color = r.b2.color; $("desc2").textContent = r.b2.desc;
+ paintBands($("bands2"),bands2,r.b2);
+
+ const top = [...r.chosen].sort((a,b)=>b.pts-a.pts).slice(0,3);
+ $("prio").innerHTML = top.length ? top.map(e=>`<div class="pitem" style="border-left-color:${e.pts>=40?"var(--red)":e.pts>=25?"var(--amber)":"var(--cyan)"}"><div class="top"><span>Acontecimiento ${e.id}</span><span>${e.pts} puntos</span></div><p style="margin-bottom:0">${escapeHtml(e.text)}</p></div>`).join("")
+  : `<p class="muted" style="margin:0">No has marcado ningún acontecimiento del último año.</p>`;
+ $("sicount").textContent = `(${r.yes.length} de 28)`;
+ $("chips").innerHTML = r.yes.length ? r.yes.map(q=>`<span class="chip"><b style="color:var(--blue)">${q.id}.</b> ${escapeHtml(q.text)}</span>`).join("")
+  : `<p class="muted" style="margin:0">No has respondido «Sí» a ninguna pregunta.</p>`;
  $("full").innerHTML = reportHtml(r);
  $("intro").style.display="none"; $("quiz").style.display="none";
  $("results").style.display="block";
@@ -275,21 +295,23 @@ function showResults(){
  window.scrollTo({top:0,behavior:"smooth"});
 }
 function reportHtml(r){
- return Object.entries(areas).map(([k,a])=>`<h3 style="margin:16px 0 6px;font-size:1rem"><span class="dot" style="background:${a.color}"></span>${a.name} · ${r.byArea[k]}/24</h3><table><thead><tr><th>#</th><th>Afirmación</th><th class="c">Respuesta</th></tr></thead><tbody>${
-   r.items.filter(i=>i.area===k).map(i=>`<tr><td>${i.id}</td><td>${escapeHtml(i.text)}</td><td class="c" style="${i.answer>=3?"color:var(--red);font-weight:700":""}">${i.answer} · ${labels[i.answer]}</td></tr>`).join("")
- }</tbody></table>`).join("");
+ return `<h3 style="margin:16px 0 6px;font-size:1rem">Parte 1 · Acontecimientos marcados · ${r.s1} puntos</h3>` +
+  (r.chosen.length ? `<table><thead><tr><th>#</th><th>Acontecimiento</th><th class="c">Puntos</th></tr></thead><tbody>${r.chosen.map(e=>`<tr><td>${e.id}</td><td>${escapeHtml(e.text)}</td><td class="c">${e.pts}</td></tr>`).join("")}<tr><td></td><td><b>Total</b></td><td class="c"><b>${r.s1}</b></td></tr></tbody></table>` : `<p class="muted">Ninguno.</p>`) +
+  `<h3 style="margin:20px 0 6px;font-size:1rem">Parte 2 · Respuestas · ${r.s2} puntos <span class="muted" style="font-weight:400">(Sí = 2 · No = 1)</span></h3><table><thead><tr><th>#</th><th>Pregunta</th><th class="c">Respuesta</th></tr></thead><tbody>${
+   questions.map(q=>{const si=state.answers[q.id]==="si";return `<tr><td>${q.id}</td><td>${escapeHtml(q.text)}</td><td class="c" style="${si?"color:var(--red);font-weight:700":""}">${si?"Sí · 2":"No · 1"}</td></tr>`}).join("")
+  }</tbody></table>`;
 }
 function restart(){
- state.page=0; state.answers={};
+ state.page=0; state.events={}; state.answers={};
  $("results").style.display="none"; $("intro").style.display="block"; $("quiz").style.display="block";
  renderPage(); window.scrollTo({top:0,behavior:"smooth"});
 }
 $("next").onclick = ()=>{
  if(!pageComplete()){ $("warn").style.display="block"; return; }
- if(state.page<pages-1){ state.page++; renderPage(); $("quiz").scrollIntoView({behavior:"smooth"}); }
+ if(state.page<steps.length-1){ state.page++; renderPage(); $("quiz").scrollIntoView({behavior:"smooth"}); }
  else showResults();
 };
-$("prev").onclick = ()=>{ capture(); if(state.page>0){state.page--; renderPage(); $("quiz").scrollIntoView({behavior:"smooth"});} };
+$("prev").onclick = ()=>{ if(state.page>0){state.page--; renderPage(); $("quiz").scrollIntoView({behavior:"smooth"});} };
 $("toggle").onclick = ()=>{ const f=$("full"); const open=f.style.display==="block"; f.style.display=open?"none":"block"; $("toggle").textContent=open?"Ver análisis completo":"Ocultar análisis completo"; };
 renderPage();
 </script>
